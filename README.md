@@ -4,13 +4,13 @@
 
 Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply run:
 
-```json
+```
 composer require gentor/omnipay-instamojo
 ```
 
 ## Purchase
 
-```
+```php
 use Omnipay\Omnipay;
 
 // Setup payment gateway
@@ -30,6 +30,7 @@ $response = $gateway->purchase(
 if ($response->isSuccessful() && $response->isRedirect()) {
 
     // Redirect to offsite payment gateway
+    // $response->getTransactionStatus();
     $response->redirect();
 
 } else {
@@ -54,6 +55,7 @@ if ($response->isSuccessful()) {
 
     // Request was successful
     print_r($response);
+    echo $response->getTransactionStatus();
 
 } else {
 
@@ -77,6 +79,7 @@ if ($response->isSuccessful()) {
 
     // Request was successful
     print_r($response);
+    echo $response->getTransactionStatus();
 
 } else {
 
@@ -100,6 +103,7 @@ if ($response->isSuccessful()) {
 
     // Request was successful
     print_r($response);
+    echo $response->getTransactionStatus();
 
 } else {
 
@@ -107,3 +111,25 @@ if ($response->isSuccessful()) {
     echo $response->getMessage();
 }
 ```
+
+## Webhook
+
+```
+// Capture payment request
+$response = $gateway->capture($_POST)->send();
+
+// Process response
+if ($response->isSuccessful()) {
+
+    // Request was successful
+    print_r($response);
+    echo $response->getTransactionStatus();
+
+} else {
+
+    // Request failed
+    echo $response->getMessage();
+}
+```
+
+## [Instamojo API v1.1 Documentation](https://docs.instamojo.com/docs/payments-api)
