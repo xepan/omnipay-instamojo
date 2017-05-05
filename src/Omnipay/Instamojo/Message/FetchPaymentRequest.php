@@ -3,10 +3,10 @@
 namespace Omnipay\Instamojo\Message;
 
 /**
- * Class CompletePurchaseRequest
+ * Class FetchPaymentRequest
  * @package Omnipay\Instamojo\Message
  */
-class CompletePurchaseRequest extends AbstractRequest
+class FetchPaymentRequest extends AbstractRequest
 {
     /**
      * @return array
@@ -17,21 +17,21 @@ class CompletePurchaseRequest extends AbstractRequest
 
         $this->validate('transactionReference');
 
-        $data['payment_id'] = $this->getTransactionReference();
+        $data['id'] = $this->getTransactionReference();
 
         return $data;
     }
 
     /**
      * @param mixed $data
-     * @return CompletePurchaseResponse
+     * @return Response
      */
     public function sendData($data)
     {
-        $httpRequest = $this->createRequest('GET', $this->getEndpoint() . 'payments/' . $data['payment_id']);
+        $httpRequest = $this->createRequest('GET', $this->getEndpoint() . 'payment-requests/' . $data['id']);
         $jsonResponse = $this->sendRequest($httpRequest);
 
-        return $this->response = new CompletePurchaseResponse($this, $jsonResponse);
+        return $this->response = new Response($this, $jsonResponse);
     }
 
 }

@@ -26,7 +26,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      * @param $data
      * @return RequestInterface
      */
-    public function createRequest($method, $endpoint, $data)
+    public function createRequest($method, $endpoint, $data = null)
     {
         return $this->httpClient->createRequest($method, $endpoint, null, $data);
     }

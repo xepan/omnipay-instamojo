@@ -83,23 +83,6 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @return mixed
-     */
-    public function getLink()
-    {
-        return $this->getParameter('link');
-    }
-
-    /**
-     * @param $value
-     * @return $this
-     */
-    public function setLink($value)
-    {
-        return $this->setParameter('link', $value);
-    }
-
-    /**
      * @param array $parameters
      * @return \Omnipay\Common\Message\AbstractRequest
      */
@@ -124,6 +107,15 @@ class Gateway extends AbstractGateway
     public function refund(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Instamojo\Message\RefundRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function fetchPaymentRequest(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Instamojo\Message\FetchPaymentRequest', $parameters);
     }
 
 }
