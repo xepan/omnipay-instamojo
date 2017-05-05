@@ -21,6 +21,52 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $testEndpoint = 'https://test.instamojo.com/api/1.1/';
 
     /**
+     * @param $method
+     * @param $endpoint
+     * @param $data
+     * @return RequestInterface
+     */
+    public function createRequest($method, $endpoint, $data)
+    {
+        return $this->httpClient->createRequest($method, $endpoint, null, $data);
+    }
+
+    /**
+     * @param RequestInterface $httpRequest
+     * @return array|bool|float|int|string
+     */
+    public function sendRequest(RequestInterface $httpRequest)
+    {
+        $httpRequest
+            ->setHeader('X-Api-key', $this->getApiKey())
+            ->setHeader('X-Auth-Token', $this->getAuthToken());
+
+        try {
+            $httpResponse = $httpRequest->send();
+        } catch (ClientErrorResponseException $e) {
+            $httpResponse = $e->getResponse();
+        }
+
+        return $httpResponse->json();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEndpoint()
+    {
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return [];
+    }
+
+    /**
      * @return string
      */
     public function getSalt()
@@ -35,23 +81,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setSalt($value)
     {
         return $this->setParameter('salt', $value);
-    }
-
-    /**
-     * @return string
-     */
-    public function getLink()
-    {
-        return $this->getParameter('link');
-    }
-
-    /**
-     * @param $value
-     * @return \Omnipay\Common\Message\AbstractRequest
-     */
-    public function setLink($value)
-    {
-        return $this->setParameter('link', $value);
     }
 
     /**
@@ -88,49 +117,4 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('auth_token', $value);
     }
 
-    /**
-     * @param RequestInterface $httpRequest
-     * @return array|bool|float|int|string
-     */
-    public function sendRequest(RequestInterface $httpRequest)
-    {
-        $httpRequest
-            ->setHeader('X-Api-key', $this->getApiKey())
-            ->setHeader('X-Auth-Token', $this->getAuthToken());
-
-        try {
-            $httpResponse = $httpRequest->send();
-        } catch (ClientErrorResponseException $e) {
-            $httpResponse = $e->getResponse();
-        }
-
-        return $httpResponse->json();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getEndpoint()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
-    }
-
-    /**
-     * @param $method
-     * @param $endpoint
-     * @param $data
-     * @return RequestInterface
-     */
-    public function createRequest($method, $endpoint, $data)
-    {
-        return $this->httpClient->createRequest($method, $endpoint, null, $data);
-    }
-
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        return [];
-    }
 }

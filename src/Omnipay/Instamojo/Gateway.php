@@ -116,4 +116,14 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Instamojo\Message\CompletePurchaseRequest', $parameters);
     }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function refund(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Instamojo\Message\RefundRequest', $parameters);
+    }
+
 }

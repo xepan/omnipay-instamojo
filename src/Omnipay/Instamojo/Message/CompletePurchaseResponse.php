@@ -8,16 +8,6 @@ namespace Omnipay\Instamojo\Message;
  */
 class CompletePurchaseResponse extends Response
 {
-    /**
-     * @return null
-     */
-    public function getCode()
-    {
-        return (
-            isset($this->data['ErrorCode']) &&
-            $this->data['ErrorCode'] != ''
-        ) ? $this->data['ErrorCode'] : null;
-    }
 
     /**
      * @return mixed
@@ -29,6 +19,21 @@ class CompletePurchaseResponse extends Response
         }
 
         return null;
+    }
+
+    /**
+     * Was the transaction successful?
+     *
+     * @return string Transaction status, one of {@see STATUS_COMPLETED}, {@see #STATUS_PENDING},
+     * or {@see #STATUS_FAILED}.
+     */
+    public function getTransactionStatus()
+    {
+        if (isset($this->data['payment']['status']) && 'Credit' == $this->data['payment']['status']) {
+            return static::STATUS_COMPLETED;
+        }
+
+        return static::STATUS_FAILED;
     }
 
     /**

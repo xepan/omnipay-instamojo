@@ -3,6 +3,7 @@
 namespace Omnipay\Instamojo\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\NotificationInterface;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
@@ -10,7 +11,7 @@ use Omnipay\Common\Message\RedirectResponseInterface;
  * Class Response
  * @package Omnipay\Instamojo\Message
  */
-class Response extends AbstractResponse implements RedirectResponseInterface
+class Response extends AbstractResponse implements RedirectResponseInterface, NotificationInterface
 {
 
     /**
@@ -45,6 +46,17 @@ class Response extends AbstractResponse implements RedirectResponseInterface
     public function getTransactionReference()
     {
         return !empty($this->data['payment_request']['id']) ? $this->data['payment_request']['id'] : null;
+    }
+
+    /**
+     * Was the transaction successful?
+     *
+     * @return string Transaction status, one of {@see STATUS_COMPLETED}, {@see #STATUS_PENDING},
+     * or {@see #STATUS_FAILED}.
+     */
+    public function getTransactionStatus()
+    {
+        return static::STATUS_PENDING;
     }
 
     /**
