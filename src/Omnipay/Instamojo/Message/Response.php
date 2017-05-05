@@ -7,21 +7,31 @@ use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
- * Instamojo Response
+ * Class Response
+ * @package Omnipay\Instamojo\Message
  */
 class Response extends AbstractResponse implements RedirectResponseInterface
 {
 
+    /**
+     * @return bool
+     */
     public function isSuccessful()
     {
         return !empty($this->data['success']);
     }
 
+    /**
+     * @return bool
+     */
     public function isRedirect()
     {
         return !empty($this->data['payment_request']['longurl']);
     }
 
+    /**
+     * @return null
+     */
     public function getRedirectUrl()
     {
         return $this->redirectUrl = $this->isRedirect() ? $this->data['payment_request']['longurl'] : null;
@@ -47,11 +57,17 @@ class Response extends AbstractResponse implements RedirectResponseInterface
         return json_encode($this->data['message']);
     }
 
+    /**
+     * @return string
+     */
     public function getRedirectMethod()
     {
         return 'GET';
     }
 
+    /**
+     * @return mixed
+     */
     public function getRedirectData()
     {
         return $this->getData();

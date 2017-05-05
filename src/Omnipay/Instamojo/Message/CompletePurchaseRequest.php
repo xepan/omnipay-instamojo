@@ -2,23 +2,26 @@
 
 namespace Omnipay\Instamojo\Message;
 
-class CompletePurchaseRequest extends PurchaseRequest
+/**
+ * Class CompletePurchaseRequest
+ * @package Omnipay\Instamojo\Message
+ */
+class CompletePurchaseRequest extends AbstractRequest
 {
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function getData()
     {
-        $data = array(
+        $data = [
             'payment_id' => $this->getTransactionReference(),
-        );
+        ];
 
         return $data;
     }
 
     /**
-     * function to get the payment id
-     * @return [type] [description]
+     * @return mixed
      */
     public function getTransactionReference()
     {
@@ -26,25 +29,15 @@ class CompletePurchaseRequest extends PurchaseRequest
     }
 
     /**
-     * function to check the status of payment
-     * on complete ofthe purchase
+     * @param mixed $data
+     * @return CompletePurchaseResponse
      */
     public function sendData($data)
     {
-        if ($data['payment_id']) {
-            $httpRequest = $this->httpClient->createRequest(
-                'GET',
-                $this->liveEndPoint . 'payments/' . $data['payment_id'],
-                null,
-                $data
-            );
+        $paymentId = isset($data['payment_id']) ? $data['payment_id'] : null;
+        $httpRequest = $this->createRequest('GET', $this->getEndpoint() . 'payments/' . $paymentId, $data);
+        $jsonResponse = $this->sendRequest($httpRequest);
 
-            $httpResponse = $httpRequest
-                ->setHeader('X-Api-key', $this->getApiKey())
-                ->setHeader('X-Auth-Token', $this->getAuthToken())
-                ->send();
-
-            return $this->response = new CompletePurchaseResponse($this, $httpResponse->json());
-        }
+        return $this->response = new CompletePurchaseResponse($this, $jsonResponse);
     }
 }

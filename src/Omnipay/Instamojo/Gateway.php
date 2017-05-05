@@ -5,17 +5,23 @@ namespace Omnipay\Instamojo;
 use Omnipay\Common\AbstractGateway;
 
 /**
- * Instamojo Gateway
- *
+ * Class Gateway
+ * @package Omnipay\Instamojo
  * @link https://docs.instamojo.com/docs/payments-api
  */
 class Gateway extends AbstractGateway
 {
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'Instamojo';
     }
 
+    /**
+     * @return array
+     */
     public function getDefaultParameters()
     {
         return array(
@@ -26,59 +32,86 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * Setting up the salt for signature
-     * @return [type] [description]
+     * @return mixed
      */
     public function getSalt()
     {
         return $this->getParameter('salt');
     }
 
+    /**
+     * @param $value
+     * @return $this
+     */
     public function setSalt($value)
     {
         return $this->setParameter('salt', $value);
     }
 
+    /**
+     * @return mixed
+     */
     public function getApiKey()
     {
         return $this->getParameter('api_key');
     }
 
+    /**
+     * @param $value
+     * @return $this
+     */
     public function setApiKey($value)
     {
         return $this->setParameter('api_key', $value);
     }
 
+    /**
+     * @return mixed
+     */
     public function getAuthToken()
     {
         return $this->getParameter('auth_token');
     }
 
+    /**
+     * @param $value
+     * @return $this
+     */
     public function setAuthToken($value)
     {
         return $this->setParameter('auth_token', $value);
     }
 
+    /**
+     * @return mixed
+     */
     public function getLink()
     {
         return $this->getParameter('link');
     }
 
+    /**
+     * @param $value
+     * @return $this
+     */
     public function setLink($value)
     {
         return $this->setParameter('link', $value);
     }
 
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Instamojo\Message\PurchaseRequest', $parameters);
     }
 
-    public function authorize(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\Instamojo\Message\AuthorizeRequest', $parameters);
-    }
-
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
     public function completePurchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Instamojo\Message\CompletePurchaseRequest', $parameters);
