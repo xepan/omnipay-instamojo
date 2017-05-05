@@ -1,5 +1,5 @@
 {
-    "name": "sinfini/omnipay-instamojo",
+    "name": "gentor/omnipay-instamojo",
     "type": "library",
     "description": "Instamojo (Raven) driver for the Omnipay PHP payment processing library",
     "keywords": [
@@ -11,7 +11,7 @@
         "purchase",
         "instamojo"
     ],
-    "homepage": "https://github.com/sinfini/omnipay-instamojo",
+    "homepage": "https://github.com/gentor/omnipay-instamojo",
     "license": "MIT",
     "minimum-stability": "dev",
     "autoload": {
