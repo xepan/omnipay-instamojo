@@ -1,17 +1,16 @@
 <?php
+
 namespace Omnipay\Instamojo\Message;
 
 class CompletePurchaseRequest extends PurchaseRequest
 {
-    protected $liveEndPoint = 'https://www.instamojo.com/api/1.1/';
-    protected $testEndPoint = 'https://www.instamojo.com/api/1.1/';
     /**
      * {@inheritdoc}
      */
     public function getData()
     {
         $data = array(
-            'payment_id'  => $this->getTransactionReference(),
+            'payment_id' => $this->getTransactionReference(),
         );
 
         return $data;
@@ -25,7 +24,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     {
         return $this->httpRequest->query->get('payment_id');
     }
-    
+
     /**
      * function to check the status of payment
      * on complete ofthe purchase
@@ -35,7 +34,7 @@ class CompletePurchaseRequest extends PurchaseRequest
         if ($data['payment_id']) {
             $httpRequest = $this->httpClient->createRequest(
                 'GET',
-                $this->liveEndPoint.'payments/'.$data['payment_id'],
+                $this->liveEndPoint . 'payments/' . $data['payment_id'],
                 null,
                 $data
             );
@@ -44,7 +43,7 @@ class CompletePurchaseRequest extends PurchaseRequest
                 ->setHeader('X-Api-key', $this->getApiKey())
                 ->setHeader('X-Auth-Token', $this->getAuthToken())
                 ->send();
-                
+
             return $this->response = new CompletePurchaseResponse($this, $httpResponse->json());
         }
     }

@@ -11,26 +11,40 @@ use Omnipay\Common\Message\RedirectResponseInterface;
  */
 class Response extends AbstractResponse implements RedirectResponseInterface
 {
-    public function __construct(RequestInterface $request, $data, $redirectUrl)
-    {
-        parent::__construct($request, $data);
-        $this->redirectUrl = $redirectUrl;
-        $this->data = $data;
-    }
 
     public function isSuccessful()
     {
-        return false;
+        return !empty($this->data['success']);
     }
 
     public function isRedirect()
     {
-        return true;
+        return !empty($this->data['payment_request']['longurl']);
     }
 
     public function getRedirectUrl()
     {
-        return $this->redirectUrl;
+        return $this->redirectUrl = $this->isRedirect() ? $this->data['payment_request']['longurl'] : null;
+    }
+
+    /**
+     * Gateway Reference
+     *
+     * @return null|string A reference provided by the gateway to represent this transaction
+     */
+    public function getTransactionReference()
+    {
+        return !empty($this->data['payment_request']['id']) ? $this->data['payment_request']['id'] : null;
+    }
+
+    /**
+     * Response Message
+     *
+     * @return null|string A response message from the payment gateway
+     */
+    public function getMessage()
+    {
+        return json_encode($this->data['message']);
     }
 
     public function getRedirectMethod()

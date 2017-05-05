@@ -5,9 +5,9 @@ namespace Omnipay\Instamojo;
 use Omnipay\Common\AbstractGateway;
 
 /**
- * instamojo Gateway
+ * Instamojo Gateway
  *
- * @link http://docs.instamojoservices.com/raven/api-guide/
+ * @link https://docs.instamojo.com/docs/payments-api
  */
 class Gateway extends AbstractGateway
 {
@@ -21,7 +21,6 @@ class Gateway extends AbstractGateway
         return array(
             'api_key' => '',
             'auth_token' => '',
-            'end_point' =>'',
             'salt' => ''
         );
     }
@@ -39,7 +38,7 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('salt', $value);
     }
-    
+
     public function getApiKey()
     {
         return $this->getParameter('api_key');

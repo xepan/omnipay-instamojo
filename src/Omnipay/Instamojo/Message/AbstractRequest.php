@@ -7,19 +7,9 @@ namespace Omnipay\Instamojo\Message;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $liveEndPoint = 'https://www.instamojo.com/api/1.1/';
-    protected $testEndPoint = 'https://www.instamojo.com/api/1.1/';
+    protected $liveEndpoint = 'https://www.instamojo.com/api/1.1/';
+    protected $testEndpoint = 'https://test.instamojo.com/api/1.1/';
 
-    public function getUsername()
-    {
-        return $this->getParameter('username');
-    }
-
-    public function setUsername($value)
-    {
-        return $this->setParameter('username', $value);
-    }
-    
     public function getSalt()
     {
         return $this->getParameter('salt');
@@ -66,19 +56,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function sendData($data)
     {
-        $url = $this->getLink().'?'.http_build_query($data, '', '&').'&embed=form';
+        return $this->response = new Response($this, $data);
+    }
 
-        return $this->response = new Response($this, $data, $url);
+    protected function getEndpoint()
+    {
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
     public function getData()
     {
-        $this->validate('amount');
-
-        $data = array();
-
-        $data['data_amount'] = $this->getAmount();
-
-        return $data;
+        return [];
     }
 }
