@@ -30,7 +30,8 @@ $response = $gateway->purchase(
 if ($response->isSuccessful() && $response->isRedirect()) {
 
     // Redirect to offsite payment gateway
-    // $response->getTransactionStatus();
+    // print_r($response->getData());
+    // echo $response->getTransactionStatus();
     $response->redirect();
 
 } else {
@@ -42,7 +43,7 @@ if ($response->isSuccessful() && $response->isRedirect()) {
 
 ## Complete Purchase
 
-```
+```php
 // Send complete purchase request
 $response = $gateway->completePurchase(
     [
@@ -54,7 +55,7 @@ $response = $gateway->completePurchase(
 if ($response->isSuccessful()) {
 
     // Request was successful
-    print_r($response);
+    print_r($response->getData());
     echo $response->getTransactionStatus();
 
 } else {
@@ -66,7 +67,7 @@ if ($response->isSuccessful()) {
 
 ## Refund
 
-```
+```php
 // Send refund request
 $response = $gateway->refund(
     [
@@ -78,7 +79,7 @@ $response = $gateway->refund(
 if ($response->isSuccessful()) {
 
     // Request was successful
-    print_r($response);
+    print_r($response->getData());
     echo $response->getTransactionStatus();
 
 } else {
@@ -90,7 +91,7 @@ if ($response->isSuccessful()) {
 
 ## Fetch Payment Request
 
-```
+```php
 // Send fetch payment request
 $response = $gateway->fetchPaymentRequest(
     [
@@ -102,7 +103,7 @@ $response = $gateway->fetchPaymentRequest(
 if ($response->isSuccessful()) {
 
     // Request was successful
-    print_r($response);
+    print_r($response->getData());
     echo $response->getTransactionStatus();
 
 } else {
@@ -114,15 +115,25 @@ if ($response->isSuccessful()) {
 
 ## Webhook
 
-```
+```php
+use Omnipay\Omnipay;
+
+// Setup payment gateway
+$gateway = Omnipay::create('Instamojo');
+$gateway->setSalt('abc123');
+
 // Capture payment request
-$response = $gateway->capture($_POST)->send();
+$response = $gateway->capture(
+    [
+        'webhook' => $_POST
+    ]
+)->send();
 
 // Process response
 if ($response->isSuccessful()) {
 
     // Request was successful
-    print_r($response);
+    print_r($response->getData());
     echo $response->getTransactionStatus();
 
 } else {

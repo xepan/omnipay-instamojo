@@ -2,8 +2,6 @@
 
 namespace Omnipay\Instamojo\Message;
 
-use Omnipay\Common\Exception\InvalidRequestException;
-
 /**
  * Class CaptureRequest
  * @package Omnipay\Instamojo\Message
@@ -16,7 +14,7 @@ class CaptureRequest extends AbstractRequest
      */
     public function getData()
     {
-        parse_str($this->httpRequest->getContent(), $data);
+        $data = $this->getWebhook();
         $mac_provided = $data['mac'];  // Get the MAC from the POST data
         unset($data['mac']);  // Remove the MAC key from the data.
         ksort($data, SORT_STRING | SORT_FLAG_CASE);
@@ -25,7 +23,7 @@ class CaptureRequest extends AbstractRequest
         if ($mac_provided == $mac_calculated) {
             return $data;
         } else {
-            throw new InvalidRequestException('MAC mismatch');
+            return ['message' => 'MAC mismatch'];
         }
     }
 
@@ -36,6 +34,23 @@ class CaptureRequest extends AbstractRequest
     public function sendData($data)
     {
         return $this->response = new CaptureResponse($this, $data);
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebhook()
+    {
+        return $this->getParameter('webhook');
+    }
+
+    /**
+     * @param $value
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setWebhook($value)
+    {
+        return $this->setParameter('webhook', $value);
     }
 
 }
