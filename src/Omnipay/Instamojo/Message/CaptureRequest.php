@@ -16,7 +16,7 @@ class CaptureRequest extends AbstractRequest
      */
     public function getData()
     {
-        $data = $this->getParameters();
+        parse_str($this->httpRequest->getContent(), $data);
         $mac_provided = $data['mac'];  // Get the MAC from the POST data
         unset($data['mac']);  // Remove the MAC key from the data.
         ksort($data, SORT_STRING | SORT_FLAG_CASE);
@@ -31,11 +31,11 @@ class CaptureRequest extends AbstractRequest
 
     /**
      * @param mixed $data
-     * @return CompletePurchaseResponse
+     * @return CaptureResponse
      */
     public function sendData($data)
     {
-        return $this->response = new CompletePurchaseResponse($this, $data);
+        return $this->response = new CaptureResponse($this, $data);
     }
 
 }
