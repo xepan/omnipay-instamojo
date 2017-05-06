@@ -1,5 +1,5 @@
 {
-    "name": "omnipay/instamojo",
+    "name": "gentor/omnipay-instamojo",
     "type": "library",
     "description": "Instamojo API v1.1 driver for the Omnipay PHP payment processing library",
     "keywords": [
