@@ -1,7 +1,7 @@
 {
-    "name": "gentor/omnipay-instamojo",
+    "name": "omnipay/instamojo",
     "type": "library",
-    "description": "Instamojo (Raven) driver for the Omnipay PHP payment processing library",
+    "description": "Instamojo API v1.1 driver for the Omnipay PHP payment processing library",
     "keywords": [
         "gateway",
         "merchant",
