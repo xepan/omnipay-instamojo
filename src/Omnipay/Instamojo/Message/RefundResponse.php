@@ -11,6 +11,8 @@ use Omnipay\Common\Message\NotificationInterface;
 class RefundResponse extends Response
 {
 
+    const STATUS_REFUNDED = 'refunded';
+
     /**
      * @return mixed
      */
@@ -34,7 +36,7 @@ class RefundResponse extends Response
         if (isset($this->data['refund']['status'])) {
             switch ($this->data['refund']['status']) {
                 case 'Refunded':
-                    return static::STATUS_COMPLETED;
+                    return static::STATUS_REFUNDED;
                 case 'Pending':
                     return static::STATUS_PENDING;
             }

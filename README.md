@@ -3,7 +3,7 @@
 **[Instamojo](https://www.instamojo.com/) driver for the Omnipay PHP payment processing library**
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.4+.
+processing library for PHP 5.3+.
 This package implements [Instamojo Payments API v1.1](https://docs.instamojo.com/docs/payments-api).
 
 ## Installation
@@ -128,18 +128,15 @@ use Omnipay\Omnipay;
 $gateway = Omnipay::create('Instamojo');
 $gateway->setSalt('abc123');
 
-// Capture payment request
-$response = $gateway->capture(
-    [
-        'webhook' => $_POST
-    ]
-)->send();
+// Payment notification request
+$response = $gateway->acceptNotification()->send();
 
 // Process response
 if ($response->isSuccessful()) {
 
     // Request was successful
     print_r($response->getData());
+    echo $response->getTransactionReference();
     echo $response->getTransactionStatus();
 
 } else {

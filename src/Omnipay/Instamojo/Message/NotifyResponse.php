@@ -3,10 +3,10 @@
 namespace Omnipay\Instamojo\Message;
 
 /**
- * Class CaptureResponse
+ * Class NotifyResponse
  * @package Omnipay\Instamojo\Message
  */
-class CaptureResponse extends Response
+class NotifyResponse extends Response
 {
 
     /**

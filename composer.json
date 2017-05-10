@@ -13,6 +13,12 @@
     ],
     "homepage": "https://github.com/gentor/omnipay-instamojo",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Evgeni Nurkov",
+            "email": "evgeni.nurkov@gmail.com"
+        }
+    ],
     "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "Omnipay\\Instamojo\\" : "src/" }

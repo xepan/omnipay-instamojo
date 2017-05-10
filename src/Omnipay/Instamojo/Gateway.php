@@ -119,12 +119,13 @@ class Gateway extends AbstractGateway
     }
 
     /**
+     * Handle notification callback.
+     *
      * @param array $parameters
      * @return \Omnipay\Common\Message\AbstractRequest
      */
-    public function capture(array $parameters = array())
+    public function acceptNotification(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Instamojo\Message\CaptureRequest', $parameters);
+        return $this->createRequest('\Omnipay\Instamojo\Message\NotifyRequest', $parameters);
     }
-
 }
