@@ -1,7 +1,7 @@
 {
-    "name": "gentor/omnipay-instamojo",
+    "name": "xepan/omnipay-instamojo",
     "type": "library",
-    "description": "Instamojo API v1.1 driver for the Omnipay PHP payment processing library",
+    "description": "Instamojo API v1.1 driver for the Omnipay PHP payment processing library: credit : gentor/omnipay-instamojo",
     "keywords": [
         "gateway",
         "merchant",
@@ -11,7 +11,7 @@
         "purchase",
         "instamojo"
     ],
-    "homepage": "https://github.com/gentor/omnipay-instamojo",
+    "homepage": "https://github.com/xepan/omnipay-instamojo",
     "license": "MIT",
     "authors": [
         {
