@@ -13,10 +13,8 @@ class CompletePurchaseRequest extends AbstractRequest
      */
     public function getData()
     {
-        $data = parent::getData();
-
+        if($_GET['payment_id'] && $_GET['paid'] && $_GET['pay_now']) $this->setTransactionReference($_GET['payment_id']);
         $this->validate('transactionReference');
-
         $data['payment_id'] = $this->getTransactionReference();
 
         return $data;
@@ -30,8 +28,8 @@ class CompletePurchaseRequest extends AbstractRequest
     {
         $httpRequest = $this->createRequest('GET', $this->getEndpoint() . 'payments/' . $data['payment_id']);
         $jsonResponse = $this->sendRequest($httpRequest);
-
-        return $this->response = new CompletePurchaseResponse($this, $jsonResponse);
+        $this->response = new CompletePurchaseResponse($this, $jsonResponse);
+        return $this->response;
     }
 
 }

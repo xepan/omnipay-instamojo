@@ -36,6 +36,10 @@ class CompletePurchaseResponse extends Response
         return static::STATUS_FAILED;
     }
 
+    function getOrderStatus(){
+        return $this->getTransactionStatus();
+    }
+
     /**
      * @return mixed
      */

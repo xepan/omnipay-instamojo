@@ -27,7 +27,8 @@ class Gateway extends AbstractGateway
         return array(
             'api_key' => '',
             'auth_token' => '',
-            'salt' => ''
+            'salt' => '',
+            'testMode' => false
         );
     }
 
@@ -51,7 +52,7 @@ class Gateway extends AbstractGateway
     /**
      * @return mixed
      */
-    public function getApiKey()
+    public function getApi_Key()
     {
         return $this->getParameter('api_key');
     }
@@ -60,7 +61,7 @@ class Gateway extends AbstractGateway
      * @param $value
      * @return $this
      */
-    public function setApiKey($value)
+    public function setApi_Key($value)
     {
         return $this->setParameter('api_key', $value);
     }
@@ -68,7 +69,7 @@ class Gateway extends AbstractGateway
     /**
      * @return mixed
      */
-    public function getAuthToken()
+    public function getAuth_Token()
     {
         return $this->getParameter('auth_token');
     }
@@ -77,10 +78,27 @@ class Gateway extends AbstractGateway
      * @param $value
      * @return $this
      */
-    public function setAuthToken($value)
+    public function setAuth_Token($value)
     {
         return $this->setParameter('auth_token', $value);
     }
+
+    // /**
+    //  * @return mixed
+    //  */
+    // public function getTransactionReference()
+    // {
+    //     return $this->getParameter('transactionReference');
+    // }
+
+    // /**
+    //  * @param $value
+    //  * @return $this
+    //  */
+    // public function setTransactionReference($value)
+    // {
+    //     return $this->setParameter('transactionReference', $value);
+    // }
 
     /**
      * @param array $parameters
